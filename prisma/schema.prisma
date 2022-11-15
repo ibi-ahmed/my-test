@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  companies Company[]
+
+  @@map("users")
+}
+
+model Company {
+  id                 Int      @id @default(autoincrement())
+  company_name       String
+  // business_type          String
+  // registered_address?  String
+  // operational_address? String
+  // nationality            String
+  contact_first_name String
+  contact_last_name  String
+  // contact_phone          String
+  year_incorporated  DateTime
+  // rc_number              String
+  // tin_number             String
+  // no_staff               Int
+  // no_expatriate          Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  isCompleted        Boolean  @default(false)
+  contact            User     @relation(fields: [user_id], references: [id])
+  user_id            Int
+
+  @@map("companies")
+}
