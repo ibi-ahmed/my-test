@@ -2,11 +2,11 @@ import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-// import { useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const Navigation = () => {
 
-    // const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     const [isActive, setIsActive] = useState(false);
     function toggleHamburger()  {
@@ -34,9 +34,9 @@ const Navigation = () => {
                 Action 1
             </a>
 
-            {/* {session &&(<a className="navbar-item">
+            {session &&(<a className="navbar-item">
                 Action 2
-            </a>)} */}
+            </a>)}
 
             </div>
 
@@ -48,32 +48,32 @@ const Navigation = () => {
                             <strong>Register</strong>
                         </a>
                     </Link>
-                    <a href='/auth/login' className="button is-light">
-                        Log in
-                    </a>    
+                    <Link href='/auth/login'>
+                        <a className="button is-light">
+                            Log in
+                        </a>    
+                    </Link>
                 </div>
             </div>
-            <div className="navbar-item has-dropdown is-hoverable">
+            {session &&(<div className="navbar-item has-dropdown is-hoverable">
+                
                 <a className="navbar-link">
-                    Mike Tyson
+                    {session.user.first_name +' '+session.user.last_name}
                 </a>
 
                 <div className="navbar-dropdown is-right">
                     <a className="navbar-item">
-                        Profile
+                        Edit Profile
                     </a>
                     <a className="navbar-item">
                         Messages
-                    </a>
-                    <a className="navbar-item">
-                        Option 3
                     </a>
                     <hr className="navbar-divider"/>
                     <a className="navbar-item">
                         Logout
                     </a>
                 </div>
-            </div>
+            </div>)}
             </div>
         </div>
     </nav>

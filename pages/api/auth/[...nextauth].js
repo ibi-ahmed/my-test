@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaClient } from '@prisma/client';
-import { verifyPassword } from '../../../../my-auth/lib/auth';
+import { verifyPassword } from '../../../lib/auth';
 
 const prisma = new PrismaClient();
 
@@ -13,8 +13,8 @@ export const authOptions = {
         CredentialsProvider({
             // name: "Credentials",
             credentials: {},
-            async authorize(credentials, req) {
-                const user = await prisma.user.findUnique({
+            async authorize(credentials) {
+                const user = await prisma.user.findFirst({
                     where: {
                         email: credentials.email
                     }
@@ -27,20 +27,21 @@ export const authOptions = {
                         throw new Error('Wrong password! Try again');
                     }
                 }
-                return user.email;
+                return user;
+                
             },
-            secret: "secret"
+            secret: process.env.NEXTAUTH_SECRET
         })
     ],
     callbacks: {
-        async jwt(token, user) {
+        async jwt({ token, user }) {
             if (user) {
-                token.accessToken = user.token;
+                token.user = user;
             }
             return token;
         },
-        async session(session, token) {
-            session.accessToken = token.accessToken;
+        async session({ session, token }) {
+            session.user = token.user;
             return session;
         }
     }

@@ -12,6 +12,9 @@ datasource db {
 
 model User {
   id        Int       @id @default(autoincrement())
+  first_name String
+  last_name  String
+  // contact_phone          String
   email     String    @unique
   password  String
   createdAt DateTime  @default(now())
@@ -28,9 +31,8 @@ model Company {
   // registered_address?  String
   // operational_address? String
   // nationality            String
-  contact_first_name String
-  contact_last_name  String
-  // contact_phone          String
+  // company_phone          String
+  // company_email
   year_incorporated  DateTime
   // rc_number              String
   // tin_number             String

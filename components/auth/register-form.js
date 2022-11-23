@@ -5,8 +5,8 @@ function RegisterForm() {
   const router = useRouter();
   
   const company_name_ref = useRef();
-  const contact_first_name_ref = useRef();
-  const contact_last_name_ref = useRef();
+  const first_name_ref = useRef();
+  const last_name_ref = useRef();
   const year_incorporated_ref = useRef();
   const email_ref = useRef();
   const password_ref = useRef();
@@ -20,8 +20,8 @@ function RegisterForm() {
 
   async function RegisterCompany(
     company_name,
-    contact_first_name,
-    contact_last_name,
+    first_name,
+    last_name,
     year_incorporated,
     email,
     password,
@@ -29,8 +29,8 @@ function RegisterForm() {
   ) {
     const input = {
       company_name,
-      contact_first_name,
-      contact_last_name,
+      first_name,
+      last_name,
       year_incorporated,
       email,
       password,
@@ -61,8 +61,8 @@ function RegisterForm() {
     e.preventDefault();
 
     const entered_company_name = company_name_ref.current.value;
-    const entered_contact_first_name = contact_first_name_ref.current.value;
-    const entered_contact_last_name = contact_last_name_ref.current.value;
+    const entered_first_name = first_name_ref.current.value;
+    const entered_last_name = last_name_ref.current.value;
     const entered_year_incorporated = year_incorporated_ref.current.value;
     const entered_email = email_ref.current.value;
     const entered_password = password_ref.current.value;
@@ -71,8 +71,8 @@ function RegisterForm() {
     try {
       const result = await RegisterCompany(
         entered_company_name,
-        entered_contact_first_name,
-        entered_contact_last_name,
+        entered_first_name,
+        entered_last_name,
         entered_year_incorporated,
         entered_email,
         entered_password,
@@ -114,7 +114,7 @@ function RegisterForm() {
               type="text"
               required
               placeholder="Enter first name"
-              ref={contact_first_name_ref}
+              ref={first_name_ref}
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ function RegisterForm() {
               type="text"
               required
               placeholder="Enter last name"
-              ref={contact_last_name_ref}
+              ref={last_name_ref}
             />
           </div>
         </div>

@@ -11,10 +11,10 @@ async function handler(req, res) {
         if (validator.isEmpty(input.company_name)) {
             return res.status(422).json({ message: 'Sorry! Company name is required.' });
         }
-        if (validator.isEmpty(input.contact_first_name)) {
+        if (validator.isEmpty(input.first_name)) {
             return res.status(422).json({ message: 'Sorry! Contact first name is required.' });
         }
-        if (validator.isEmpty(input.contact_last_name)) {
+        if (validator.isEmpty(input.last_name)) {
             return res.status(422).json({ message: 'Sorry! Contact last name is required.' });
         }
 
@@ -44,14 +44,14 @@ async function handler(req, res) {
 
         const result = await prisma.user.create({
             data: {
+                first_name: input.first_name,
+                last_name: input.last_name,
                 email: input.email,
                 password: hashedPassword,
                 companies: {
                     create: [
                         {
                             company_name: input.company_name,
-                            contact_first_name: input.contact_first_name,
-                            contact_last_name: input.contact_last_name,
                             year_incorporated: new Date(input.year_incorporated),
                         }
                     ]
